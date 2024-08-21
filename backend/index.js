@@ -3,14 +3,13 @@ import mysql from "mysql"
 import cors from "cors"
 
 const app=express()
-
 app.use(express.json())
 app.use(cors())
 
 const db = mysql.createConnection({
     host:"localhost",
     user:"root",
-    password:"14785236",
+    password:"12345",
     database:"test"
 })
 
@@ -46,6 +45,17 @@ app.post("/books", (req,res)=>{
         if(err) return res.json(err) 
             return res.json("book has been created")
 
+    })
+
+})
+
+app.delete("/books/:id",(req,res)=>{
+    const bookId = req.params.id;
+    const q = "DELETE FROM books WHERE id= ?"
+
+    db.query(q,[bookId],(err,data)=>{
+        if(err) return res.json(err) 
+            return res.json("book has been deleted!!")
     })
 
 })
